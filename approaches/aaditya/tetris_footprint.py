@@ -332,10 +332,3 @@ def render_frame(game):
     )
     board_str = render_board(game.board)
     return f"{header}\n{preview}\n\n{stats}\n\n{board_str}"
-
-
-# --------------------------------------------------------------------------
-# Minimal smoke test (does NOT implement placement search / input handling —
-# that part is yours to write, per your request). This just proves the
-# footprint renders and locks pieces correctly.
-# --------------------------------------------------------------------------

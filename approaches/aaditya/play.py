@@ -1,5 +1,6 @@
 import os
 import time
+import sys
 
 from tetris_footprint import TetrisGame, SHAPES, get_rotation_count, get_cells
 
@@ -86,14 +87,17 @@ def clear_screen():
 def run(sleep_seconds=SLEEP_SECONDS, max_pieces=MAX_PIECES):
     game = TetrisGame()
     placed = 0
+    cleared=0
 
     while max_pieces is None or placed < max_pieces:
         placement = best_placement(game)
         if placement is None:
             clear_screen()
+            # removing below line might speedup time
             print(game.render())
             print("\nNo valid placement left -- game over.")
-            break
+            return cleared/placed if placed else 0.0
+            # it is better to have both variables returned for better data analysis
 
         rotation, origin_row, origin_col = placement
         result = game.place_current(rotation, origin_row, origin_col)
@@ -102,10 +106,17 @@ def run(sleep_seconds=SLEEP_SECONDS, max_pieces=MAX_PIECES):
         clear_screen()
         print(game.render())
         if result["lines_cleared"]:
-            print(f"\nCleared {result['lines_cleared']} line(s)!")
+            cleared+=result["lines_cleared"]
+            # print(f"\nCleared {result['lines_cleared']} line(s)!")
 
-        time.sleep(sleep_seconds)
+        # time.sleep(sleep_seconds)
 
 
 if __name__ == "__main__":
-    run()
+    # mx=sys.maxsize
+    mx=500
+    cprList=[]
+    for i in range(mx):
+        cprList.append(run())
+        print('-'*10,i,'-'*10)
+    print(cprList)

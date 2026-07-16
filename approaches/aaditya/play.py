@@ -4,7 +4,7 @@ import sys
 
 from tetris_footprint import TetrisGame, SHAPES, get_rotation_count, get_cells
 
-SLEEP_SECONDS = 0.6
+SLEEP_SECONDS = 1
 MAX_PIECES = None  # None = run until no placement is possible (game over)
 
 
@@ -109,12 +109,12 @@ def run(sleep_seconds=SLEEP_SECONDS, max_pieces=MAX_PIECES):
             cleared+=result["lines_cleared"]
             # print(f"\nCleared {result['lines_cleared']} line(s)!")
 
-        # time.sleep(sleep_seconds)
+        time.sleep(sleep_seconds)
 
 
 if __name__ == "__main__":
     # mx=sys.maxsize
-    mx=500
+    mx=1
     cprList=[]
     for i in range(mx):
         cprList.append(run())
